@@ -13,30 +13,34 @@
 
   <style>
     :root {
+      /* DARK THEME (default) */
       --bg-body: #020617;
-      --bg-body-soft: #020617;
       --bg-card: #020617;
-      --bg-card-grad-1: rgba(56, 189, 248, 0.10);
-      --bg-card-grad-2: rgba(129, 140, 248, 0.22);
-      --bg-card-overlay-1: rgba(129, 140, 248, 0.10);
-      --bg-card-overlay-2: rgba(15, 118, 110, 0.10);
 
-      --border-card: rgba(148, 163, 184, 0.45);
+      --bg-card-grad-1: rgba(56, 189, 248, 0.10);
+      --bg-card-grad-2: rgba(129, 140, 248, 0.18);
+      --bg-card-overlay-1: rgba(129, 140, 248, 0.08);
+      --bg-card-overlay-2: rgba(34, 197, 94, 0.10);
+
+      --border-card: rgba(148, 163, 184, 0.55);
       --border-soft: rgba(148, 163, 184, 0.55);
-      --accent: #6366f1;
-      --accent-soft: rgba(99, 102, 241, 0.18);
-      --accent-strong: rgba(79, 70, 229, 1);
+
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.18);
+      --accent-strong: #1d4ed8;
+
       --text-main: #e5e7eb;
       --text-muted: #9ca3af;
       --text-soft: #6b7280;
+
       --danger: #f97373;
       --success: #22c55e;
 
-      --surface-deep: rgba(15, 23, 42, 0.95);
-      --surface-mid: rgba(15, 23, 42, 0.9);
-      --surface-soft: rgba(15, 23, 42, 0.86);
+      --surface-deep: rgba(15, 23, 42, 0.97);
+      --surface-mid: rgba(15, 23, 42, 0.93);
+      --surface-soft: rgba(15, 23, 42, 0.9);
 
-      --shadow-main: 0 20px 60px rgba(15, 23, 42, 0.85);
+      --shadow-main: 0 20px 60px rgba(15, 23, 42, 0.8);
       --shadow-strong: 0 24px 70px rgba(15, 23, 42, 0.95);
 
       --radius-card: 22px;
@@ -48,22 +52,25 @@
 
     /* LIGHT THEME OVERRIDES */
     body.theme-light {
-      --bg-body: #f5f5f7;
-      --bg-body-soft: #e5e7eb;
+      --bg-body: #f4f5fb;
       --bg-card: #ffffff;
-      --bg-card-grad-1: rgba(96, 165, 250, 0.18);
-      --bg-card-grad-2: rgba(244, 244, 245, 0.9);
+
+      --bg-card-grad-1: rgba(129, 140, 248, 0.15);
+      --bg-card-grad-2: rgba(219, 234, 254, 0.9);
       --bg-card-overlay-1: rgba(129, 140, 248, 0.08);
-      --bg-card-overlay-2: rgba(56, 189, 248, 0.08);
+      --bg-card-overlay-2: rgba(59, 130, 246, 0.08);
 
       --border-card: rgba(148, 163, 184, 0.55);
-      --border-soft: rgba(148, 163, 184, 0.65);
-      --accent: #4f46e5;
-      --accent-soft: rgba(79, 70, 229, 0.12);
-      --accent-strong: #4f46e5;
+      --border-soft: rgba(148, 163, 184, 0.7);
+
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.1);
+      --accent-strong: #1d4ed8;
+
       --text-main: #020617;
       --text-muted: #4b5563;
       --text-soft: #6b7280;
+
       --danger: #dc2626;
       --success: #16a34a;
 
@@ -71,7 +78,7 @@
       --surface-mid: rgba(248, 250, 252, 0.96);
       --surface-soft: rgba(241, 245, 249, 0.98);
 
-      --shadow-main: 0 18px 55px rgba(15, 23, 42, 0.16);
+      --shadow-main: 0 18px 55px rgba(15, 23, 42, 0.14);
       --shadow-strong: 0 24px 70px rgba(15, 23, 42, 0.16);
     }
 
@@ -89,8 +96,8 @@
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       min-height: 100dvh;
       background:
-        radial-gradient(130% 180% at 10% 0%, #0f172a 0%, var(--bg-body) 40%, var(--bg-body) 100%),
-        radial-gradient(circle at 110% -20%, rgba(129, 140, 248, 0.18), transparent 55%);
+        radial-gradient(120% 160% at 0% 0%, #0b1220 0%, var(--bg-body) 40%, var(--bg-body) 100%),
+        radial-gradient(circle at 100% -20%, rgba(37, 99, 235, 0.35), transparent 55%);
       background-color: var(--bg-body);
       color: var(--text-main);
       display: flex;
@@ -116,17 +123,19 @@
       }
     }
 
+    /* TOP BAR & LOGO */
+
     .brand {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 10px;
-      gap: 8px;
+      gap: 10px;
     }
 
     .brand-left {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       align-items: center;
     }
 
@@ -134,7 +143,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 4px 11px;
+      padding: 6px 12px;
       border-radius: var(--radius-pill);
       background: var(--surface-deep);
       border: 1px solid var(--border-card);
@@ -142,21 +151,51 @@
       box-shadow: var(--shadow-strong);
     }
 
-    .brand-pill span.emoji {
-      font-size: 1.05rem;
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: conic-gradient(from 210deg, #22c55e, #22c55e, #2563eb, #4f46e5, #22c55e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.7);
+      position: relative;
+      overflow: hidden;
     }
 
-    .brand-pill span.text {
-      font-size: 0.75rem;
-      letter-spacing: 0.09em;
+    .logo-mark::before {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: inherit;
+      background: radial-gradient(circle at 30% 0%, rgba(255,255,255,0.28), transparent 55%),
+                  radial-gradient(circle at 70% 100%, rgba(15, 23, 42, 0.85), transparent 60%);
+    }
+
+    .logo-icon {
+      position: relative;
+      font-size: 1.1rem;
+      color: #e5fdf4;
+      text-shadow: 0 2px 4px rgba(15, 23, 42, 0.8);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .logo-name {
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: var(--text-muted);
     }
 
-    .brand-sub {
+    .logo-tag {
       font-size: 0.7rem;
       color: var(--text-soft);
-      opacity: 0.9;
     }
 
     .theme-toggle {
@@ -175,7 +214,7 @@
     }
 
     .theme-toggle:hover {
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.5);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.6);
       transform: translateY(-1px);
       border-color: var(--accent);
     }
@@ -192,17 +231,19 @@
 
     body.theme-light .theme-toggle .icon.moon {
       opacity: 0.25;
-      transform: scale(0.85);
+      transform: scale(0.8);
     }
 
     body.theme-dark .theme-toggle .icon.sun {
       opacity: 0.2;
-      transform: scale(0.85);
+      transform: scale(0.8);
     }
 
     .theme-toggle .label {
       font-size: 0.76rem;
     }
+
+    /* CARD */
 
     .card {
       position: relative;
@@ -248,7 +289,7 @@
     }
 
     .title {
-      font-size: 1.32rem;
+      font-size: 1.3rem;
       font-weight: 600;
       letter-spacing: 0.01em;
       display: flex;
@@ -257,8 +298,8 @@
     }
 
     .title span.icon {
-      font-size: 1.45rem;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+      font-size: 1.4rem;
+      filter: drop-shadow(0 4px 12px rgba(15, 23, 42, 0.6));
     }
 
     .subtitle {
@@ -283,6 +324,8 @@
       color: var(--text-main);
       font-weight: 600;
     }
+
+    /* NAV TABS */
 
     .nav-tabs-row {
       display: flex;
@@ -322,7 +365,7 @@
     .nav-tab.active {
       background: var(--surface-mid);
       color: var(--text-main);
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.75);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.6);
     }
 
     .nav-tab:active {
@@ -356,6 +399,8 @@
         transform: translateY(0);
       }
     }
+
+    /* CHECKLIST */
 
     .checklist {
       display: flex;
@@ -445,6 +490,8 @@
       color: var(--text-muted);
     }
 
+    /* NOTE */
+
     .note-area {
       margin-bottom: 10px;
     }
@@ -485,6 +532,8 @@
       box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.7);
       background: var(--surface-mid);
     }
+
+    /* PROGRESS + ACTIONS */
 
     .progress-row {
       display: flex;
@@ -540,7 +589,7 @@
       flex: 1;
       border: none;
       border-radius: var(--radius-pill);
-      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
       color: #f9fafb;
       font-weight: 600;
       font-size: 0.9rem;
@@ -550,7 +599,7 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      box-shadow: 0 16px 38px rgba(79, 70, 229, 0.75);
+      box-shadow: 0 16px 38px rgba(37, 99, 235, 0.7);
       transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.12s ease;
       white-space: nowrap;
     }
@@ -561,13 +610,13 @@
 
     .primary-btn:hover {
       filter: brightness(1.05);
-      box-shadow: 0 20px 46px rgba(79, 70, 229, 0.9);
+      box-shadow: 0 20px 46px rgba(37, 99, 235, 0.85);
       transform: translateY(-1px);
     }
 
     .primary-btn:active {
       transform: translateY(1px) scale(0.99);
-      box-shadow: 0 8px 24px rgba(79, 70, 229, 0.7);
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.7);
     }
 
     .tiny-meta {
@@ -580,6 +629,8 @@
       color: var(--text-main);
       font-weight: 600;
     }
+
+    /* LAST LOG + STATS */
 
     .last-log {
       margin-top: 10px;
@@ -674,7 +725,8 @@
       font-weight: 600;
     }
 
-    /* Settings view */
+    /* SETTINGS */
+
     .settings-info {
       font-size: 0.8rem;
       color: var(--text-soft);
@@ -825,6 +877,7 @@
     }
 
     /* Toast */
+
     .toast {
       position: fixed;
       left: 50%;
@@ -869,10 +922,14 @@
     <div class="brand">
       <div class="brand-left">
         <div class="brand-pill">
-          <span class="emoji">🧠</span>
-          <span class="text">Gönül Rahatlığı · Daily</span>
+          <div class="logo-mark">
+            <span class="logo-icon">✓</span>
+          </div>
+          <div class="logo-text">
+            <div class="logo-name">Gönül Rahatlığı</div>
+            <div class="logo-tag">Çıkış kontrolü</div>
+          </div>
         </div>
-        <div class="brand-sub">Evden çıkış anında küçük ritüel, gün boyu kafan rahat.</div>
       </div>
       <button id="themeToggle" class="theme-toggle" type="button">
         <span class="icon moon">🌙</span>
@@ -890,8 +947,8 @@
               <span>Çıkış Kontrolü</span>
             </div>
             <p class="subtitle">
-              <span class="subtitle-strong">Ütü mü, ocak mı, kapı mı?</span> Çıkmadan 10 saniye ayır,
-              sonra otobüste “geri dönsem mi?” stresi bitsin.
+              <span class="subtitle-strong">Ütü mü, ocak mı, kapı mı?</span>
+              Çıkmadan 10 saniye ayır; sonra otobüste “geri dönsem mi?” filmi bitiyor.
             </p>
           </div>
           <div class="badge-timestamp">
@@ -952,7 +1009,7 @@
         <div id="view-settings" class="view">
           <div class="section-label">Liste ayarları</div>
           <div class="settings-info">
-            Liste ve kayıtlar sadece bu cihazda tutulur. Aynı QR'ı herkes kullansa bile,
+            Liste ve kayıtlar yalnızca bu cihazda tutulur. Aynı QR'ı yüz kişi de kullansa,
             herkesin “gönül rahatlığı” günlüğü kendine özeldir.
           </div>
 
@@ -980,8 +1037,8 @@
   <div id="toast" class="toast"></div>
 
   <script>
-    const LOGS_KEY = "exitChecklistLogs_v5";
-    const CONFIG_KEY = "exitChecklistConfig_v3";
+    const LOGS_KEY = "exitChecklistLogs_v6";
+    const CONFIG_KEY = "exitChecklistConfig_v4";
     const THEME_KEY = "gr_theme";
     const metaTheme = document.getElementById("themeColorMeta");
 
@@ -1043,7 +1100,7 @@
       body.classList.remove("theme-dark", "theme-light");
       if (mode === "light") {
         body.classList.add("theme-light");
-        if (metaTheme) metaTheme.setAttribute("content", "#f5f5f7");
+        if (metaTheme) metaTheme.setAttribute("content", "#f4f5fb");
         themeToggleBtn.querySelector(".label").textContent = "Aydınlık";
       } else {
         body.classList.add("theme-dark");
