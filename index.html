@@ -17,15 +17,14 @@
       --card-bg: #020617;
       --card-border: rgba(148, 163, 184, 0.45);
       --accent: #6366f1;
-      --accent-soft: rgba(99, 102, 241, 0.12);
       --accent-soft-strong: rgba(99, 102, 241, 0.18);
       --text-main: #e5e7eb;
       --text-muted: #9ca3af;
       --text-soft: #6b7280;
       --danger: #f97373;
       --success: #4ade80;
-      --shadow-main: 0 18px 60px rgba(15, 23, 42, 0.75);
-      --radius-card: 18px;
+      --shadow-main: 0 20px 60px rgba(15, 23, 42, 0.8);
+      --radius-card: 20px;
       --radius-pill: 999px;
       --radius-soft: 12px;
     }
@@ -40,8 +39,8 @@
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       min-height: 100vh;
       background:
-        radial-gradient(120% 150% at 10% 0%, #0f172a 0%, #020617 40%, #020617 100%),
-        radial-gradient(circle at 110% -20%, rgba(56, 189, 248, 0.15), transparent 55%);
+        radial-gradient(130% 180% at 10% 0%, #0f172a 0%, #020617 40%, #020617 100%),
+        radial-gradient(circle at 110% -20%, rgba(129, 140, 248, 0.18), transparent 55%);
       color: var(--text-main);
       display: flex;
       justify-content: center;
@@ -52,6 +51,16 @@
     .shell {
       width: 100%;
       max-width: 480px;
+      animation: fadeInShell 0.7s ease-out forwards;
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+    }
+
+    @keyframes fadeInShell {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .brand {
@@ -60,7 +69,6 @@
       justify-content: center;
       margin-bottom: 8px;
       gap: 8px;
-      opacity: 0.9;
     }
 
     .brand-pill {
@@ -70,8 +78,9 @@
       padding: 4px 11px;
       border-radius: var(--radius-pill);
       background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.45);
+      border: 1px solid rgba(148, 163, 184, 0.5);
       backdrop-filter: blur(12px);
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.9);
     }
 
     .brand-pill span.emoji {
@@ -88,8 +97,8 @@
     .card {
       position: relative;
       background:
-        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.08), transparent 50%),
-        radial-gradient(circle at 100% 0, rgba(129, 140, 248, 0.18), transparent 55%),
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.10), transparent 50%),
+        radial-gradient(circle at 100% 0, rgba(129, 140, 248, 0.22), transparent 55%),
         var(--card-bg);
       border-radius: var(--radius-card);
       padding: 18px 16px 20px;
@@ -101,10 +110,12 @@
     .card::before {
       content: "";
       position: absolute;
-      inset: -80px;
-      background: radial-gradient(circle at top, rgba(129, 140, 248, 0.08), transparent 45%);
+      inset: -90px;
+      background:
+        radial-gradient(circle at top, rgba(129, 140, 248, 0.10), transparent 45%),
+        radial-gradient(circle at bottom, rgba(15, 118, 110, 0.10), transparent 50%);
       pointer-events: none;
-      opacity: 0.85;
+      opacity: 0.8;
     }
 
     .card-inner {
@@ -136,7 +147,7 @@
     }
 
     .title span.icon {
-      font-size: 1.35rem;
+      font-size: 1.4rem;
     }
 
     .subtitle {
@@ -161,8 +172,8 @@
       display: inline-flex;
       padding: 4px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.5);
       margin-bottom: 12px;
       gap: 4px;
     }
@@ -171,7 +182,7 @@
       border-radius: 999px;
       border: none;
       background: transparent;
-      padding: 5px 10px;
+      padding: 5px 11px;
       font-size: 0.8rem;
       color: var(--text-muted);
       display: inline-flex;
@@ -188,7 +199,7 @@
     .nav-tab.active {
       background: rgba(15, 23, 42, 1);
       color: var(--text-main);
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.8);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.9);
     }
 
     .nav-tab:active {
@@ -205,9 +216,22 @@
 
     .view {
       display: none;
+      animation: fadeInView 0.2s ease-out;
     }
+
     .view.active {
       display: block;
+    }
+
+    @keyframes fadeInView {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .checklist {
@@ -220,29 +244,35 @@
     .item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
+      gap: 10px;
+      padding: 9px 10px;
       border-radius: var(--radius-soft);
       background: rgba(15, 23, 42, 0.86);
-      border: 1px solid rgba(148, 163, 184, 0.4);
+      border: 1px solid rgba(148, 163, 184, 0.45);
       cursor: pointer;
-      transition: background 0.18s ease, border-color 0.18s ease, transform 0.05s ease;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.06s ease, box-shadow 0.12s ease;
     }
 
     .item:hover {
       background: rgba(15, 23, 42, 0.93);
-      border-color: rgba(129, 140, 248, 0.6);
+      border-color: rgba(129, 140, 248, 0.8);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.8);
+      transform: translateY(-1px);
     }
 
-    .item:active {
-      transform: scale(0.99);
+    .item.checked {
+      border-color: rgba(34, 197, 94, 0.85);
+      background: radial-gradient(circle at left, rgba(34, 197, 94, 0.14), transparent 55%),
+                  rgba(15, 23, 42, 0.96);
+      box-shadow: 0 10px 26px rgba(22, 163, 74, 0.55);
+      transform: translateY(-1px);
     }
 
     .item input {
       appearance: none;
-      width: 18px;
-      height: 18px;
-      border-radius: 6px;
+      width: 20px;
+      height: 20px;
+      border-radius: 7px;
       border: 1px solid rgba(148, 163, 184, 0.9);
       display: inline-flex;
       align-items: center;
@@ -251,21 +281,23 @@
       position: relative;
       cursor: pointer;
       flex-shrink: 0;
+      transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, transform 0.1s ease;
     }
 
     .item input::after {
       content: "✓";
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       color: #e5e7eb;
       opacity: 0;
-      transform: scale(0.6);
-      transition: opacity 0.15s ease, transform 0.15s ease;
+      transform: scale(0.5);
+      transition: opacity 0.16s ease, transform 0.16s ease;
     }
 
     .item input:checked {
-      border-color: var(--accent);
-      background: var(--accent-soft-strong);
-      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.45);
+      border-color: var(--success);
+      background: rgba(34, 197, 94, 0.18);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.8);
+      transform: scale(0.96);
     }
 
     .item input:checked::after {
@@ -273,16 +305,20 @@
       transform: scale(1);
     }
 
+    .item-body {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
     .item span.label {
-      font-size: 0.92rem;
+      font-size: 0.93rem;
       color: var(--text-main);
     }
 
     .item span.hint {
       font-size: 0.78rem;
       color: var(--text-muted);
-      margin-top: 2px;
-      display: block;
     }
 
     .note-area {
@@ -336,7 +372,7 @@
 
     .progress-bar {
       flex: 1;
-      height: 6px;
+      height: 8px;
       border-radius: 999px;
       background: rgba(15, 23, 42, 0.9);
       border: 1px solid rgba(31, 41, 55, 0.95);
@@ -348,7 +384,18 @@
       width: 0%;
       border-radius: 999px;
       background: linear-gradient(90deg, #22c55e, #4ade80);
-      transition: width 0.18s ease;
+      transition: width 0.2s ease-out;
+      transform-origin: left;
+    }
+
+    .progress-inner.full {
+      animation: pulseBar 0.5s ease-out;
+    }
+
+    @keyframes pulseBar {
+      0% { transform: scaleX(1); }
+      50% { transform: scaleX(1.03); }
+      100% { transform: scaleX(1); }
     }
 
     .progress-text {
@@ -379,7 +426,7 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      box-shadow: 0 12px 32px rgba(79, 70, 229, 0.45);
+      box-shadow: 0 14px 32px rgba(79, 70, 229, 0.6);
       transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.12s ease;
       white-space: nowrap;
     }
@@ -389,13 +436,14 @@
     }
 
     .primary-btn:hover {
-      filter: brightness(1.03);
-      box-shadow: 0 14px 38px rgba(79, 70, 229, 0.5);
+      filter: brightness(1.04);
+      box-shadow: 0 18px 40px rgba(79, 70, 229, 0.7);
+      transform: translateY(-1px);
     }
 
     .primary-btn:active {
       transform: translateY(1px) scale(0.99);
-      box-shadow: 0 5px 18px rgba(79, 70, 229, 0.4);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
     }
 
     .tiny-meta {
@@ -413,8 +461,8 @@
       margin-top: 10px;
       padding: 10px 10px 11px;
       border-radius: var(--radius-soft);
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.55);
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.6);
     }
 
     .last-log-header {
@@ -454,8 +502,8 @@
       font-size: 0.75rem;
       padding: 3px 7px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.98);
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -522,8 +570,8 @@
     .settings-row {
       padding: 7px 8px;
       border-radius: var(--radius-soft);
-      background: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.6);
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 6px;
@@ -540,7 +588,7 @@
       width: 100%;
       border-radius: 8px;
       border: 1px solid rgba(55, 65, 81, 0.95);
-      background: rgba(15, 23, 42, 0.96);
+      background: rgba(15, 23, 42, 0.98);
       color: var(--text-main);
       padding: 5px 7px;
       font-size: 0.8rem;
@@ -554,8 +602,8 @@
 
     .settings-row-main input:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.6);
-      background: rgba(15, 23, 42, 0.98);
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.7);
+      background: rgba(15, 23, 42, 1);
     }
 
     .settings-meta {
@@ -582,7 +630,7 @@
     .delete-btn {
       border-radius: 999px;
       border: none;
-      background: rgba(30, 64, 175, 0.4);
+      background: rgba(30, 64, 175, 0.5);
       color: #e5e7eb;
       font-size: 0.76rem;
       padding: 3px 7px;
@@ -598,7 +646,7 @@
     }
 
     .delete-btn:hover {
-      background: rgba(30, 64, 175, 0.7);
+      background: rgba(30, 64, 175, 0.8);
     }
 
     .delete-btn:active {
@@ -615,8 +663,8 @@
 
     .secondary-btn {
       border-radius: var(--radius-pill);
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.98);
       color: var(--text-main);
       font-size: 0.8rem;
       padding: 6px 10px;
@@ -624,7 +672,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      transition: background 0.15s ease, transform 0.05s ease;
+      transition: background 0.15s ease, transform 0.05s ease, box-shadow 0.12s ease;
     }
 
     .secondary-btn span.emoji {
@@ -633,10 +681,13 @@
 
     .secondary-btn:hover {
       background: rgba(15, 23, 42, 1);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.9);
+      transform: translateY(-1px);
     }
 
     .secondary-btn:active {
       transform: translateY(1px);
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.7);
     }
 
     .settings-hint {
@@ -644,6 +695,30 @@
       color: var(--text-soft);
       text-align: right;
       margin-top: 2px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      transform: translateX(-50%) translateY(16px);
+      background: rgba(15, 23, 42, 0.97);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 0.8rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.95);
+      z-index: 20;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     @media (max-width: 480px) {
@@ -667,7 +742,7 @@
     <div class="brand">
       <div class="brand-pill">
         <span class="emoji">🧠</span>
-        <span class="text">Gönül Rahatlığı · v1.0</span>
+        <span class="text">Gönül Rahatlığı · Daily</span>
       </div>
     </div>
 
@@ -679,7 +754,7 @@
               <span class="icon">🚪</span>
               <span>Çıkış Kontrolü</span>
             </div>
-            <p class="subtitle">Ev, ofis, dükkan fark etmez. Çıkmadan 10 saniyeni ayır, sonra gün boyu aklın kalmasın.</p>
+            <p class="subtitle">Ev, ofis, dükkan fark etmez. Çıkmadan 10 saniye ayır, sonra gün boyu “ütü müydü?” stresi yok.</p>
           </div>
           <div class="badge-timestamp">
             <div>Bugün</div>
@@ -737,7 +812,7 @@
         <div id="view-settings" class="view">
           <div class="section-label">Liste ayarları</div>
           <div class="settings-info">
-            Bu liste sadece bu cihazda saklanır. Herkes aynı QR'ı kullansa bile, herkesin listesi ve kayıtları kendine özeldir.
+            Bu liste sadece bu cihazda saklanır. Herkes aynı QR'ı kullansa bile, herkesin maddeleri ve kayıtları kendine özeldir.
           </div>
 
           <div id="settingsList" class="settings-list"></div>
@@ -760,9 +835,12 @@
     </div>
   </div>
 
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
   <script>
-    const LOGS_KEY = "exitChecklistLogs_v3";
-    const CONFIG_KEY = "exitChecklistConfig_v1";
+    const LOGS_KEY = "exitChecklistLogs_v4";
+    const CONFIG_KEY = "exitChecklistConfig_v2";
 
     const defaultConfig = [
       {
@@ -812,6 +890,17 @@
     const addItemBtn = document.getElementById("addItemBtn");
     const resetBtn = document.getElementById("resetBtn");
     const navTabs = document.querySelectorAll(".nav-tab");
+    const toastEl = document.getElementById("toast");
+    let toastTimeout;
+
+    function showToast(message) {
+      toastEl.textContent = message;
+      toastEl.classList.add("show");
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toastEl.classList.remove("show");
+      }, 2200);
+    }
 
     function updateTodayLabel() {
       const now = new Date();
@@ -868,6 +957,13 @@
       const pct = total ? Math.round((done / total) * 100) : 0;
       progressInner.style.width = pct + "%";
       progressText.textContent = total ? `${done} / ${total} tamam` : "0 / 0 tamam";
+
+      progressInner.classList.remove("full");
+      if (pct === 100 && total > 0) {
+        // trigger animation
+        void progressInner.offsetWidth;
+        progressInner.classList.add("full");
+      }
     }
 
     function buildChecklist() {
@@ -880,33 +976,31 @@
         checkbox.type = "checkbox";
         checkbox.name = "item-" + index;
 
-        const textWrap = document.createElement("div");
+        const body = document.createElement("div");
+        body.className = "item-body";
 
         const mainLabel = document.createElement("span");
         mainLabel.className = "label";
         mainLabel.textContent = item.label;
 
-        textWrap.appendChild(mainLabel);
+        body.appendChild(mainLabel);
 
         if (item.hint) {
           const hintEl = document.createElement("span");
           hintEl.className = "hint";
           hintEl.textContent = item.hint;
-          textWrap.appendChild(hintEl);
+          body.appendChild(hintEl);
         }
 
         labelEl.appendChild(checkbox);
-        labelEl.appendChild(textWrap);
+        labelEl.appendChild(body);
         checklistContainer.appendChild(labelEl);
 
-        labelEl.addEventListener("click", (e) => {
-          if (e.target.tagName.toLowerCase() !== "input") {
-            checkbox.checked = !checkbox.checked;
-            updateProgress();
-          }
+        // Sadece checkbox change event'i ile state'i güncelliyoruz.
+        checkbox.addEventListener("change", () => {
+          labelEl.classList.toggle("checked", checkbox.checked);
+          updateProgress();
         });
-
-        checkbox.addEventListener("change", updateProgress);
       });
 
       updateProgress();
@@ -915,13 +1009,15 @@
     function computeStats(logs) {
       const totalLogs = logs.length;
       const datesSet = new Set(
-        logs.map((l) => {
-          try {
-            return l.time.slice(0, 10);
-          } catch {
-            return "";
-          }
-        }).filter(Boolean)
+        logs
+          .map((l) => {
+            try {
+              return l.time.slice(0, 10);
+            } catch {
+              return "";
+            }
+          })
+          .filter(Boolean)
       );
       const distinctDays = datesSet.size;
 
@@ -1095,7 +1191,7 @@
 
         deleteBtn.addEventListener("click", () => {
           if (CONFIG.length <= 1) {
-            alert("En az bir madde kalmalı.");
+            showToast("En az bir madde kalmalı.");
             return;
           }
           CONFIG.splice(index, 1);
@@ -1126,7 +1222,7 @@
       saveConfig();
       buildSettingsList();
       buildChecklist();
-      alert("Liste varsayılanlara döndü.");
+      showToast("Liste varsayılanlara döndü.");
     }
 
     saveBtn.addEventListener("click", () => {
@@ -1153,7 +1249,11 @@
       saveLogs(logs);
       renderLastLogAndStats();
 
-      checkboxes.forEach((cb) => (cb.checked = false));
+      checkboxes.forEach((cb) => {
+        cb.checked = false;
+        const parent = cb.closest(".item");
+        if (parent) parent.classList.remove("checked");
+      });
       noteInput.value = "";
       updateProgress();
 
@@ -1161,7 +1261,7 @@
         window.navigator.vibrate(25);
       }
 
-      alert("Kaydedildi. Güle güle! 😌");
+      showToast("Kayıt alındı. Güle güle! 😌");
     });
 
     addItemBtn.addEventListener("click", addNewItem);
