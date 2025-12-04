@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gönül Rahatlığı - Çıkış Kontrolü</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Font (Opsiyonel, kaldırmak istersen komple link'i silebilirsin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-gradient-start: #0f172a;
+      --bg-gradient-end: #020617;
+      --card-bg: #020617;
+      --card-border: rgba(148, 163, 184, 0.35);
+      --accent: #6366f1;
+      --accent-soft: rgba(99, 102, 241, 0.12);
+      --accent-soft-strong: rgba(99, 102, 241, 0.18);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --text-soft: #6b7280;
+      --danger: #f97373;
+      --success: #4ade80;
+      --shadow-main: 0 20px 60px rgba(15, 23, 42, 0.65);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --radius-soft: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      background: radial-gradient(120% 150% at 10% 0%, #1e293b 0%, #020617 40%, #020617 100%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      gap: 8px;
+      opacity: 0.9;
+    }
+
+    .brand-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand-pill span.emoji {
+      font-size: 1rem;
+    }
+
+    .brand-pill span.text {
+      font-size: 0.73rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .card {
+      position: relative;
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.05), transparent 50%),
+                  radial-gradient(circle at 100% 0, rgba(129, 140, 248, 0.14), transparent 55%),
+                  var(--card-bg);
+      border-radius: var(--radius-card);
+      padding: 18px 16px 20px;
+      box-shadow: var(--shadow-main);
+      border: 1px solid var(--card-border);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      background: radial-gradient(circle at top, rgba(129, 140, 248, 0.08), transparent 45%);
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .title {
+      font-size: 1.28rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .title span.icon {
+      font-size: 1.35rem;
+    }
+
+    .subtitle {
+      font-size: 0.83rem;
+      color: var(--text-soft);
+      max-width: 260px;
+    }
+
+    .badge-timestamp {
+      min-width: 120px;
+      text-align: right;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .badge-timestamp strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+    }
+
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: var(--radius-soft);
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      cursor: pointer;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.05s ease;
+    }
+
+    .item:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(129, 140, 248, 0.55);
+    }
+
+    .item:active {
+      transform: scale(0.99);
+    }
+
+    .item input {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 23, 42, 0.9);
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .item input::after {
+      content: "✓";
+      font-size: 0.85rem;
+      color: #e5e7eb;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .item input:checked {
+      border-color: var(--accent);
+      background: var(--accent-soft-strong);
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.35);
+    }
+
+    .item input:checked::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .item span.label {
+      font-size: 0.92rem;
+      color: var(--text-main);
+    }
+
+    .item span.hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+      display: block;
+    }
+
+    .note-area {
+      margin-bottom: 10px;
+    }
+
+    .note-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 4px;
+    }
+
+    .note-label span.emoji {
+      font-size: 1rem;
+    }
+
+    textarea {
+      width: 100%;
+      border-radius: var(--radius-soft);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--text-main);
+      padding: 8px 10px;
+      font-size: 0.86rem;
+      resize: none;
+      min-height: 52px;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+    }
+
+    textarea::placeholder {
+      color: var(--text-soft);
+    }
+
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.55);
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    .actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .primary-btn {
+      flex: 1;
+      border: none;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: #f9fafb;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 9px 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 10px 30px rgba(79, 70, 229, 0.35);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.12s ease;
+      white-space: nowrap;
+    }
+
+    .primary-btn span.emoji {
+      font-size: 1rem;
+    }
+
+    .primary-btn:hover {
+      filter: brightness(1.03);
+      box-shadow: 0 14px 36px rgba(79, 70, 229, 0.45);
+    }
+
+    .primary-btn:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35);
+    }
+
+    .tiny-meta {
+      font-size: 0.73rem;
+      color: var(--text-soft);
+      text-align: right;
+    }
+
+    .tiny-meta strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .last-log {
+      margin-top: 12px;
+      padding: 10px 10px 11px;
+      border-radius: var(--radius-soft);
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+    }
+
+    .last-log-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .last-log-title {
+      font-size: 0.86rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .last-log-title span.emoji {
+      font-size: 1rem;
+    }
+
+    .last-log-time {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    .chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    .chip {
+      font-size: 0.75rem;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-muted);
+    }
+
+    .chip span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.9);
+    }
+
+    .chip.good span.dot {
+      background: var(--success);
+    }
+
+    .chip.bad span.dot {
+      background: var(--danger);
+    }
+
+    .last-log-note {
+      margin-top: 4px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .last-log-empty {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 16px 14px 18px;
+      }
+      .title {
+        font-size: 1.18rem;
+      }
+      .badge-timestamp {
+        font-size: 0.7rem;
+      }
+      .subtitle {
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="brand">
+      <div class="brand-pill">
+        <span class="emoji">🧠</span>
+        <span class="text">Gönül Rahatlığı · Beta</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-header">
+          <div class="title-wrap">
+            <div class="title">
+              <span class="icon">🚪</span>
+              <span>Çıkış Kontrolü</span>
+            </div>
+            <p class="subtitle">Evden çıkmadan önce 10 saniyede işaretle, sonra otobüste “ütü mü?” paniği bitti.</p>
+          </div>
+          <div class="badge-timestamp">
+            <div>Bugün</div>
+            <strong id="todayLabel">--</strong>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-label">Kontrol listesi</div>
+          <div id="checklist" class="checklist">
+            <!-- JS ile doldurulacak -->
+          </div>
+        </div>
+
+        <div class="note-area">
+          <div class="note-label">
+            <span class="emoji">📝</span>
+            <span>Ek not (isteğe bağlı)</span>
+          </div>
+          <textarea id="note" placeholder="Örn: Bugün ütü hiç kullanılmadı, sadece ocağı kontrol ettim."></textarea>
+        </div>
+
+        <div class="actions-row">
+          <button type="button" id="saveBtn" class="primary-btn">
+            <span class="emoji">✅</span>
+            <span>Kaydı Kaydet</span>
+          </button>
+          <div class="tiny-meta">
+            <div><strong id="totalLogs">0</strong> kayıt</div>
+            <div style="opacity: 0.8;">Bu cihazda</div>
+          </div>
+        </div>
+
+        <div id="lastLog" class="last-log">
+          <!-- Son kayıt JS ile doldurulacak -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 🔧 Buradan kendine göre maddeleri düzenleyebilirsin
+    const ITEMS = [
+      {
+        label: "Ütü fişten çekildi",
+        hint: "Kabloyu gerçekten prizden çektiğine emin ol."
+      },
+      {
+        label: "Ocak kapalı",
+        hint: "Tüm düğmeler 0 konumunda mı?"
+      },
+      {
+        label: "Pencereler kapalı",
+        hint: "Oda + balkon pencerelerini bir tur kontrol et."
+      },
+      {
+        label: "Kapı kilitli",
+        hint: "Kapıyı çekip kilidi çevirdin mi?"
+      },
+      {
+        label: "Kedinin suyu / maması tamam",
+        hint: "Mama kabı ve su kabına bir bak."
+      }
+    ];
+
+    const STORAGE_KEY = "exitChecklistLogs_v2";
+    const checklistContainer = document.getElementById("checklist");
+    const noteInput = document.getElementById("note");
+    const lastLogDiv = document.getElementById("lastLog");
+    const saveBtn = document.getElementById("saveBtn");
+    const totalLogsEl = document.getElementById("totalLogs");
+    const todayLabel = document.getElementById("todayLabel");
+
+    function updateTodayLabel() {
+      const now = new Date();
+      // Örn: 4 Aralık 2025 · Perşembe
+      const date = now.toLocaleDateString("tr-TR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        weekday: "long"
+      });
+      todayLabel.textContent = date;
+    }
+
+    function buildChecklist() {
+      checklistContainer.innerHTML = "";
+      ITEMS.forEach((item, index) => {
+        const labelEl = document.createElement("label");
+        labelEl.className = "item";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.name = "item-" + index;
+        checkbox.value = item.label;
+
+        const textWrap = document.createElement("div");
+
+        const mainLabel = document.createElement("span");
+        mainLabel.className = "label";
+        mainLabel.textContent = item.label;
+
+        textWrap.appendChild(mainLabel);
+
+        if (item.hint) {
+          const hintEl = document.createElement("span");
+          hintEl.className = "hint";
+          hintEl.textContent = item.hint;
+          textWrap.appendChild(hintEl);
+        }
+
+        labelEl.appendChild(checkbox);
+        labelEl.appendChild(textWrap);
+
+        checklistContainer.appendChild(labelEl);
+
+        // Checkbox'a tıklamayı kolaylaştırmak için tüm label'a da tıklanabilirlik
+        labelEl.addEventListener("click", (e) => {
+          // input'un kendisine basıldıysa ekstra toggle yapma
+          if (e.target.tagName.toLowerCase() !== "input") {
+            checkbox.checked = !checkbox.checked;
+          }
+        });
+      });
+    }
+
+    function loadLogs() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        console.error("LocalStorage parse error:", e);
+        return [];
+      }
+    }
+
+    function saveLogs(logs) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(logs));
+    }
+
+    function renderLastLog() {
+      const logs = loadLogs();
+      totalLogsEl.textContent = logs.length.toString();
+
+      if (!logs.length) {
+        lastLogDiv.innerHTML = `
+          <div class="last-log-header">
+            <div class="last-log-title">
+              <span class="emoji">🕒</span>
+              <span>Henüz kayıt yok</span>
+            </div>
+          </div>
+          <div class="last-log-empty">
+            İlk kez kullanıyorsan, evden çıkarken maddeleri işaretleyip "Kaydı Kaydet"e tıkla.
+          </div>
+        `;
+        return;
+      }
+
+      const last = logs[logs.length - 1];
+      const dt = new Date(last.time);
+      const dateStr = dt.toLocaleString("tr-TR", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+
+      const chipsHtml = last.answers
+        .map(ans => {
+          const ok = ans.checked;
+          const cls = ok ? "chip good" : "chip bad";
+          const labelShort = ans.label.length > 24 ? ans.label.slice(0, 24) + "…" : ans.label;
+          const statusText = ok ? "Tamam" : "Eksik";
+          return `
+            <div class="${cls}">
+              <span class="dot"></span>
+              <span>${labelShort}</span>
+              <span style="opacity:0.7;">· ${statusText}</span>
+            </div>
+          `;
+        })
+        .join("");
+
+      const noteHtml = last.note
+        ? `<div class="last-log-note"><strong>Not:</strong> ${last.note}</div>`
+        : "";
+
+      lastLogDiv.innerHTML = `
+        <div class="last-log-header">
+          <div class="last-log-title">
+            <span class="emoji">📌</span>
+            <span>Son çıkış kaydın</span>
+          </div>
+          <div class="last-log-time">${dateStr}</div>
+        </div>
+        <div class="chips-row">
+          ${chipsHtml}
+        </div>
+        ${noteHtml}
+      `;
+    }
+
+    saveBtn.addEventListener("click", () => {
+      const logs = loadLogs();
+      const answers = [];
+
+      const checkboxes = checklistContainer.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach((cb, index) => {
+        answers.push({
+          label: ITEMS[index].label,
+          checked: cb.checked
+        });
+      });
+
+      const note = noteInput.value.trim();
+
+      logs.push({
+        time: new Date().toISOString(),
+        answers,
+        note
+      });
+
+      saveLogs(logs);
+      renderLastLog();
+
+      // Kullanıcı deneyimi için check'leri temizle / notu sıfırla
+      checkboxes.forEach(cb => cb.checked = false);
+      noteInput.value = "";
+
+      // Hafif geri bildirim
+      if (window.navigator && window.navigator.vibrate) {
+        window.navigator.vibrate(25);
+      }
+
+      alert("Kaydedildi. Güle güle! 😌");
+    });
+
+    // Init
+    updateTodayLabel();
+    buildChecklist();
+    renderLastLog();
+  </script>
+</body>
+</html>
