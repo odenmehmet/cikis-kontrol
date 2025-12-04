@@ -3,30 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <title>Gönül Rahatlığı - Çıkış Kontrolü</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#020617" id="themeColorMeta" />
 
-  <!-- Google Font -->
+  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-gradient-start: #020617;
-      --bg-gradient-end: #020617;
-      --card-bg: #020617;
-      --card-border: rgba(148, 163, 184, 0.45);
+      --bg-body: #020617;
+      --bg-body-soft: #020617;
+      --bg-card: #020617;
+      --bg-card-grad-1: rgba(56, 189, 248, 0.10);
+      --bg-card-grad-2: rgba(129, 140, 248, 0.22);
+      --bg-card-overlay-1: rgba(129, 140, 248, 0.10);
+      --bg-card-overlay-2: rgba(15, 118, 110, 0.10);
+
+      --border-card: rgba(148, 163, 184, 0.45);
+      --border-soft: rgba(148, 163, 184, 0.55);
       --accent: #6366f1;
-      --accent-soft-strong: rgba(99, 102, 241, 0.18);
+      --accent-soft: rgba(99, 102, 241, 0.18);
+      --accent-strong: rgba(79, 70, 229, 1);
       --text-main: #e5e7eb;
       --text-muted: #9ca3af;
       --text-soft: #6b7280;
       --danger: #f97373;
-      --success: #4ade80;
-      --shadow-main: 0 20px 60px rgba(15, 23, 42, 0.8);
-      --radius-card: 20px;
+      --success: #22c55e;
+
+      --surface-deep: rgba(15, 23, 42, 0.95);
+      --surface-mid: rgba(15, 23, 42, 0.9);
+      --surface-soft: rgba(15, 23, 42, 0.86);
+
+      --shadow-main: 0 20px 60px rgba(15, 23, 42, 0.85);
+      --shadow-strong: 0 24px 70px rgba(15, 23, 42, 0.95);
+
+      --radius-card: 22px;
       --radius-pill: 999px;
       --radius-soft: 12px;
+
+      --blur-backdrop: 18px;
+    }
+
+    /* LIGHT THEME OVERRIDES */
+    body.theme-light {
+      --bg-body: #f5f5f7;
+      --bg-body-soft: #e5e7eb;
+      --bg-card: #ffffff;
+      --bg-card-grad-1: rgba(96, 165, 250, 0.18);
+      --bg-card-grad-2: rgba(244, 244, 245, 0.9);
+      --bg-card-overlay-1: rgba(129, 140, 248, 0.08);
+      --bg-card-overlay-2: rgba(56, 189, 248, 0.08);
+
+      --border-card: rgba(148, 163, 184, 0.55);
+      --border-soft: rgba(148, 163, 184, 0.65);
+      --accent: #4f46e5;
+      --accent-soft: rgba(79, 70, 229, 0.12);
+      --accent-strong: #4f46e5;
+      --text-main: #020617;
+      --text-muted: #4b5563;
+      --text-soft: #6b7280;
+      --danger: #dc2626;
+      --success: #16a34a;
+
+      --surface-deep: rgba(255, 255, 255, 0.98);
+      --surface-mid: rgba(248, 250, 252, 0.96);
+      --surface-soft: rgba(241, 245, 249, 0.98);
+
+      --shadow-main: 0 18px 55px rgba(15, 23, 42, 0.16);
+      --shadow-strong: 0 24px 70px rgba(15, 23, 42, 0.16);
     }
 
     * {
@@ -35,28 +81,35 @@
       padding: 0;
     }
 
+    html, body {
+      height: 100%;
+    }
+
     body {
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      min-height: 100vh;
+      min-height: 100dvh;
       background:
-        radial-gradient(130% 180% at 10% 0%, #0f172a 0%, #020617 40%, #020617 100%),
+        radial-gradient(130% 180% at 10% 0%, #0f172a 0%, var(--bg-body) 40%, var(--bg-body) 100%),
         radial-gradient(circle at 110% -20%, rgba(129, 140, 248, 0.18), transparent 55%);
+      background-color: var(--bg-body);
       color: var(--text-main);
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 16px;
+      -webkit-font-smoothing: antialiased;
     }
 
     .shell {
       width: 100%;
-      max-width: 480px;
-      animation: fadeInShell 0.7s ease-out forwards;
+      max-width: 500px;
+      padding-bottom: env(safe-area-inset-bottom);
+      animation: shellIn 0.6s cubic-bezier(0.21, 0.8, 0.25, 1) forwards;
       opacity: 0;
-      transform: translateY(12px) scale(0.98);
+      transform: translateY(18px) scale(0.98);
     }
 
-    @keyframes fadeInShell {
+    @keyframes shellIn {
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -66,9 +119,15 @@
     .brand {
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin-bottom: 8px;
+      justify-content: space-between;
+      margin-bottom: 10px;
       gap: 8px;
+    }
+
+    .brand-left {
+      display: flex;
+      gap: 8px;
+      align-items: center;
     }
 
     .brand-pill {
@@ -77,33 +136,84 @@
       gap: 8px;
       padding: 4px 11px;
       border-radius: var(--radius-pill);
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.9);
+      background: var(--surface-deep);
+      border: 1px solid var(--border-card);
+      backdrop-filter: blur(var(--blur-backdrop));
+      box-shadow: var(--shadow-strong);
     }
 
     .brand-pill span.emoji {
-      font-size: 1rem;
+      font-size: 1.05rem;
     }
 
     .brand-pill span.text {
-      font-size: 0.73rem;
-      letter-spacing: 0.06em;
+      font-size: 0.75rem;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
       color: var(--text-muted);
+    }
+
+    .brand-sub {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      opacity: 0.9;
+    }
+
+    .theme-toggle {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-soft);
+      background: var(--surface-deep);
+      padding: 4px 9px;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      backdrop-filter: blur(var(--blur-backdrop));
+      transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.06s ease, border-color 0.18s ease;
+    }
+
+    .theme-toggle:hover {
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.5);
+      transform: translateY(-1px);
+      border-color: var(--accent);
+    }
+
+    .theme-toggle:active {
+      transform: translateY(1px);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.5);
+    }
+
+    .theme-toggle .icon {
+      font-size: 1rem;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+    }
+
+    body.theme-light .theme-toggle .icon.moon {
+      opacity: 0.25;
+      transform: scale(0.85);
+    }
+
+    body.theme-dark .theme-toggle .icon.sun {
+      opacity: 0.2;
+      transform: scale(0.85);
+    }
+
+    .theme-toggle .label {
+      font-size: 0.76rem;
     }
 
     .card {
       position: relative;
       background:
-        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.10), transparent 50%),
-        radial-gradient(circle at 100% 0, rgba(129, 140, 248, 0.22), transparent 55%),
-        var(--card-bg);
+        radial-gradient(circle at 0 0, var(--bg-card-grad-1), transparent 55%),
+        radial-gradient(circle at 100% 0, var(--bg-card-grad-2), transparent 60%),
+        var(--bg-card);
       border-radius: var(--radius-card);
       padding: 18px 16px 20px;
       box-shadow: var(--shadow-main);
-      border: 1px solid var(--card-border);
+      border: 1px solid var(--border-card);
       overflow: hidden;
     }
 
@@ -112,10 +222,10 @@
       position: absolute;
       inset: -90px;
       background:
-        radial-gradient(circle at top, rgba(129, 140, 248, 0.10), transparent 45%),
-        radial-gradient(circle at bottom, rgba(15, 118, 110, 0.10), transparent 50%);
+        radial-gradient(circle at top, var(--bg-card-overlay-1), transparent 45%),
+        radial-gradient(circle at bottom, var(--bg-card-overlay-2), transparent 50%);
       pointer-events: none;
-      opacity: 0.8;
+      opacity: 0.9;
     }
 
     .card-inner {
@@ -138,22 +248,28 @@
     }
 
     .title {
-      font-size: 1.3rem;
+      font-size: 1.32rem;
       font-weight: 600;
       letter-spacing: 0.01em;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
     }
 
     .title span.icon {
-      font-size: 1.4rem;
+      font-size: 1.45rem;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
     }
 
     .subtitle {
       font-size: 0.83rem;
       color: var(--text-soft);
-      max-width: 280px;
+      max-width: 290px;
+    }
+
+    .subtitle-strong {
+      font-weight: 500;
+      color: var(--accent-strong);
     }
 
     .badge-timestamp {
@@ -168,13 +284,20 @@
       font-weight: 600;
     }
 
+    .nav-tabs-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
     .nav-tabs {
       display: inline-flex;
       padding: 4px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      margin-bottom: 12px;
+      background: var(--surface-deep);
+      border: 1px solid var(--border-card);
       gap: 4px;
     }
 
@@ -184,12 +307,12 @@
       background: transparent;
       padding: 5px 11px;
       font-size: 0.8rem;
-      color: var(--text-muted);
+      color: var(--text-soft);
       display: inline-flex;
       align-items: center;
       gap: 5px;
       cursor: pointer;
-      transition: background 0.15s ease, color 0.15s ease, transform 0.05s ease;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.06s ease;
     }
 
     .nav-tab span.emoji {
@@ -197,9 +320,9 @@
     }
 
     .nav-tab.active {
-      background: rgba(15, 23, 42, 1);
+      background: var(--surface-mid);
       color: var(--text-main);
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.9);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.75);
     }
 
     .nav-tab:active {
@@ -216,14 +339,14 @@
 
     .view {
       display: none;
-      animation: fadeInView 0.2s ease-out;
+      animation: viewIn 0.2s ease-out;
     }
 
     .view.active {
       display: block;
     }
 
-    @keyframes fadeInView {
+    @keyframes viewIn {
       from {
         opacity: 0;
         transform: translateY(4px);
@@ -245,26 +368,27 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 9px 10px;
+      padding: 9px 11px;
       border-radius: var(--radius-soft);
-      background: rgba(15, 23, 42, 0.86);
-      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: var(--surface-soft);
+      border: 1px solid var(--border-soft);
       cursor: pointer;
       transition: background 0.18s ease, border-color 0.18s ease, transform 0.06s ease, box-shadow 0.12s ease;
     }
 
     .item:hover {
-      background: rgba(15, 23, 42, 0.93);
-      border-color: rgba(129, 140, 248, 0.8);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.8);
+      background: var(--surface-mid);
+      border-color: var(--accent);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.6);
       transform: translateY(-1px);
     }
 
     .item.checked {
-      border-color: rgba(34, 197, 94, 0.85);
-      background: radial-gradient(circle at left, rgba(34, 197, 94, 0.14), transparent 55%),
-                  rgba(15, 23, 42, 0.96);
-      box-shadow: 0 10px 26px rgba(22, 163, 74, 0.55);
+      border-color: rgba(34, 197, 94, 0.9);
+      background:
+        radial-gradient(circle at left, rgba(34, 197, 94, 0.18), transparent 55%),
+        var(--surface-deep);
+      box-shadow: 0 12px 30px rgba(22, 163, 74, 0.55);
       transform: translateY(-1px);
     }
 
@@ -277,7 +401,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: rgba(15, 23, 42, 0.98);
+      background: var(--surface-deep);
       position: relative;
       cursor: pointer;
       flex-shrink: 0;
@@ -295,8 +419,8 @@
 
     .item input:checked {
       border-color: var(--success);
-      background: rgba(34, 197, 94, 0.18);
-      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.8);
+      background: rgba(34, 197, 94, 0.2);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.9);
       transform: scale(0.96);
     }
 
@@ -342,7 +466,7 @@
       width: 100%;
       border-radius: var(--radius-soft);
       border: 1px solid rgba(55, 65, 81, 0.95);
-      background: rgba(15, 23, 42, 0.9);
+      background: var(--surface-deep);
       color: var(--text-main);
       padding: 8px 10px;
       font-size: 0.86rem;
@@ -358,8 +482,8 @@
 
     textarea:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.6);
-      background: rgba(15, 23, 42, 0.98);
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.7);
+      background: var(--surface-mid);
     }
 
     .progress-row {
@@ -374,7 +498,7 @@
       flex: 1;
       height: 8px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
+      background: var(--surface-deep);
       border: 1px solid rgba(31, 41, 55, 0.95);
       overflow: hidden;
     }
@@ -384,7 +508,7 @@
       width: 0%;
       border-radius: 999px;
       background: linear-gradient(90deg, #22c55e, #4ade80);
-      transition: width 0.2s ease-out;
+      transition: width 0.22s cubic-bezier(0.21, 0.8, 0.25, 1);
       transform-origin: left;
     }
 
@@ -426,7 +550,7 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      box-shadow: 0 14px 32px rgba(79, 70, 229, 0.6);
+      box-shadow: 0 16px 38px rgba(79, 70, 229, 0.75);
       transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.12s ease;
       white-space: nowrap;
     }
@@ -436,14 +560,14 @@
     }
 
     .primary-btn:hover {
-      filter: brightness(1.04);
-      box-shadow: 0 18px 40px rgba(79, 70, 229, 0.7);
+      filter: brightness(1.05);
+      box-shadow: 0 20px 46px rgba(79, 70, 229, 0.9);
       transform: translateY(-1px);
     }
 
     .primary-btn:active {
       transform: translateY(1px) scale(0.99);
-      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
+      box-shadow: 0 8px 24px rgba(79, 70, 229, 0.7);
     }
 
     .tiny-meta {
@@ -461,8 +585,8 @@
       margin-top: 10px;
       padding: 10px 10px 11px;
       border-radius: var(--radius-soft);
-      background: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: var(--surface-deep);
+      border: 1px solid var(--border-soft);
     }
 
     .last-log-header {
@@ -502,8 +626,8 @@
       font-size: 0.75rem;
       padding: 3px 7px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid var(--border-soft);
+      background: var(--surface-mid);
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -570,8 +694,8 @@
     .settings-row {
       padding: 7px 8px;
       border-radius: var(--radius-soft);
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: var(--surface-deep);
+      border: 1px solid var(--border-soft);
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 6px;
@@ -588,7 +712,7 @@
       width: 100%;
       border-radius: 8px;
       border: 1px solid rgba(55, 65, 81, 0.95);
-      background: rgba(15, 23, 42, 0.98);
+      background: var(--surface-mid);
       color: var(--text-main);
       padding: 5px 7px;
       font-size: 0.8rem;
@@ -603,7 +727,7 @@
     .settings-row-main input:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.7);
-      background: rgba(15, 23, 42, 1);
+      background: var(--surface-soft);
     }
 
     .settings-meta {
@@ -638,7 +762,7 @@
       display: inline-flex;
       align-items: center;
       gap: 3px;
-      transition: background 0.15s ease, transform 0.05s ease;
+      transition: background 0.15s ease, transform 0.05s ease, box-shadow 0.12s ease;
     }
 
     .delete-btn span.emoji {
@@ -646,11 +770,14 @@
     }
 
     .delete-btn:hover {
-      background: rgba(30, 64, 175, 0.8);
+      background: rgba(30, 64, 175, 0.75);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.7);
+      transform: translateY(-1px);
     }
 
     .delete-btn:active {
       transform: translateY(1px);
+      box-shadow: 0 5px 16px rgba(15, 23, 42, 0.6);
     }
 
     .settings-actions {
@@ -663,8 +790,8 @@
 
     .secondary-btn {
       border-radius: var(--radius-pill);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid var(--border-soft);
+      background: var(--surface-deep);
       color: var(--text-main);
       font-size: 0.8rem;
       padding: 6px 10px;
@@ -672,7 +799,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      transition: background 0.15s ease, transform 0.05s ease, box-shadow 0.12s ease;
+      transition: background 0.15s ease, transform 0.06s ease, box-shadow 0.12s ease;
     }
 
     .secondary-btn span.emoji {
@@ -680,14 +807,14 @@
     }
 
     .secondary-btn:hover {
-      background: rgba(15, 23, 42, 1);
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.9);
+      background: var(--surface-mid);
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.7);
       transform: translateY(-1px);
     }
 
     .secondary-btn:active {
       transform: translateY(1px);
-      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.7);
+      box-shadow: 0 5px 16px rgba(15, 23, 42, 0.6);
     }
 
     .settings-hint {
@@ -701,18 +828,18 @@
     .toast {
       position: fixed;
       left: 50%;
-      bottom: 28px;
-      transform: translateX(-50%) translateY(16px);
-      background: rgba(15, 23, 42, 0.97);
+      bottom: calc(16px + env(safe-area-inset-bottom));
+      transform: translateX(-50%) translateY(20px);
+      background: var(--surface-deep);
       color: var(--text-main);
       padding: 8px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
+      border: 1px solid var(--border-soft);
       font-size: 0.8rem;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease, transform 0.25s ease;
-      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.95);
+      box-shadow: var(--shadow-strong);
       z-index: 20;
     }
 
@@ -723,10 +850,10 @@
 
     @media (max-width: 480px) {
       .card {
-        padding: 16px 14px 18px;
+        padding: 16px 13px 18px;
       }
       .title {
-        font-size: 1.2rem;
+        font-size: 1.22rem;
       }
       .badge-timestamp {
         font-size: 0.7rem;
@@ -737,13 +864,21 @@
     }
   </style>
 </head>
-<body>
+<body class="theme-dark">
   <div class="shell">
     <div class="brand">
-      <div class="brand-pill">
-        <span class="emoji">🧠</span>
-        <span class="text">Gönül Rahatlığı · Daily</span>
+      <div class="brand-left">
+        <div class="brand-pill">
+          <span class="emoji">🧠</span>
+          <span class="text">Gönül Rahatlığı · Daily</span>
+        </div>
+        <div class="brand-sub">Evden çıkış anında küçük ritüel, gün boyu kafan rahat.</div>
       </div>
+      <button id="themeToggle" class="theme-toggle" type="button">
+        <span class="icon moon">🌙</span>
+        <span class="icon sun">☀️</span>
+        <span class="label">Koyu</span>
+      </button>
     </div>
 
     <div class="card">
@@ -754,7 +889,10 @@
               <span class="icon">🚪</span>
               <span>Çıkış Kontrolü</span>
             </div>
-            <p class="subtitle">Ev, ofis, dükkan fark etmez. Çıkmadan 10 saniye ayır, sonra gün boyu “ütü müydü?” stresi yok.</p>
+            <p class="subtitle">
+              <span class="subtitle-strong">Ütü mü, ocak mı, kapı mı?</span> Çıkmadan 10 saniye ayır,
+              sonra otobüste “geri dönsem mi?” stresi bitsin.
+            </p>
           </div>
           <div class="badge-timestamp">
             <div>Bugün</div>
@@ -762,15 +900,17 @@
           </div>
         </div>
 
-        <div class="nav-tabs">
-          <button class="nav-tab active" data-view="view-quick">
-            <span class="emoji">⚡</span>
-            <span>Hızlı çıkış</span>
-          </button>
-          <button class="nav-tab" data-view="view-settings">
-            <span class="emoji">🧩</span>
-            <span>Listeyi düzenle</span>
-          </button>
+        <div class="nav-tabs-row">
+          <div class="nav-tabs">
+            <button class="nav-tab active" data-view="view-quick">
+              <span class="emoji">⚡</span>
+              <span>Hızlı çıkış</span>
+            </button>
+            <button class="nav-tab" data-view="view-settings">
+              <span class="emoji">🧩</span>
+              <span>Listeyi düzenle</span>
+            </button>
+          </div>
         </div>
 
         <!-- Hızlı Çıkış -->
@@ -812,7 +952,8 @@
         <div id="view-settings" class="view">
           <div class="section-label">Liste ayarları</div>
           <div class="settings-info">
-            Bu liste sadece bu cihazda saklanır. Herkes aynı QR'ı kullansa bile, herkesin maddeleri ve kayıtları kendine özeldir.
+            Liste ve kayıtlar sadece bu cihazda tutulur. Aynı QR'ı herkes kullansa bile,
+            herkesin “gönül rahatlığı” günlüğü kendine özeldir.
           </div>
 
           <div id="settingsList" class="settings-list"></div>
@@ -839,8 +980,10 @@
   <div id="toast" class="toast"></div>
 
   <script>
-    const LOGS_KEY = "exitChecklistLogs_v4";
-    const CONFIG_KEY = "exitChecklistConfig_v2";
+    const LOGS_KEY = "exitChecklistLogs_v5";
+    const CONFIG_KEY = "exitChecklistConfig_v3";
+    const THEME_KEY = "gr_theme";
+    const metaTheme = document.getElementById("themeColorMeta");
 
     const defaultConfig = [
       {
@@ -891,7 +1034,44 @@
     const resetBtn = document.getElementById("resetBtn");
     const navTabs = document.querySelectorAll(".nav-tab");
     const toastEl = document.getElementById("toast");
+    const themeToggleBtn = document.getElementById("themeToggle");
+
     let toastTimeout;
+
+    function setTheme(mode) {
+      const body = document.body;
+      body.classList.remove("theme-dark", "theme-light");
+      if (mode === "light") {
+        body.classList.add("theme-light");
+        if (metaTheme) metaTheme.setAttribute("content", "#f5f5f7");
+        themeToggleBtn.querySelector(".label").textContent = "Aydınlık";
+      } else {
+        body.classList.add("theme-dark");
+        if (metaTheme) metaTheme.setAttribute("content", "#020617");
+        themeToggleBtn.querySelector(".label").textContent = "Koyu";
+      }
+      try {
+        localStorage.setItem(THEME_KEY, mode);
+      } catch {}
+    }
+
+    function initTheme() {
+      let stored = null;
+      try {
+        stored = localStorage.getItem(THEME_KEY);
+      } catch {}
+      if (stored === "light" || stored === "dark") {
+        setTheme(stored);
+      } else {
+        const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+        setTheme(prefersLight ? "light" : "dark");
+      }
+    }
+
+    function toggleTheme() {
+      const current = document.body.classList.contains("theme-light") ? "light" : "dark";
+      setTheme(current === "light" ? "dark" : "light");
+    }
 
     function showToast(message) {
       toastEl.textContent = message;
@@ -931,7 +1111,9 @@
     }
 
     function saveConfig() {
-      localStorage.setItem(CONFIG_KEY, JSON.stringify(CONFIG));
+      try {
+        localStorage.setItem(CONFIG_KEY, JSON.stringify(CONFIG));
+      } catch {}
     }
 
     function loadLogs() {
@@ -944,7 +1126,9 @@
     }
 
     function saveLogs(logs) {
-      localStorage.setItem(LOGS_KEY, JSON.stringify(logs));
+      try {
+        localStorage.setItem(LOGS_KEY, JSON.stringify(logs));
+      } catch {}
     }
 
     function updateProgress() {
@@ -960,7 +1144,6 @@
 
       progressInner.classList.remove("full");
       if (pct === 100 && total > 0) {
-        // trigger animation
         void progressInner.offsetWidth;
         progressInner.classList.add("full");
       }
@@ -996,7 +1179,6 @@
         labelEl.appendChild(body);
         checklistContainer.appendChild(labelEl);
 
-        // Sadece checkbox change event'i ile state'i güncelliyoruz.
         checkbox.addEventListener("change", () => {
           labelEl.classList.toggle("checked", checkbox.checked);
           updateProgress();
@@ -1023,12 +1205,9 @@
 
       let streak = 0;
       if (distinctDays > 0) {
-        const dateStrings = Array.from(datesSet);
-        const dateSet = new Set(dateStrings);
-
+        const dateSet = datesSet;
         let cursor = new Date();
         cursor.setHours(0, 0, 0, 0);
-
         while (true) {
           const iso = cursor.toISOString().slice(0, 10);
           if (dateSet.has(iso)) {
@@ -1278,7 +1457,10 @@
       });
     });
 
+    themeToggleBtn.addEventListener("click", toggleTheme);
+
     (function init() {
+      initTheme();
       updateTodayLabel();
       CONFIG = loadConfig();
       buildChecklist();
